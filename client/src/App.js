@@ -42,7 +42,6 @@ function App() {
         ></input>
         <button type="submit"></button>
       </form>
-
       <div>
         <ul>
           {tasks?.map((task) => (
