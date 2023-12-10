@@ -29,6 +29,12 @@ function App() {
   const handleInputChange = (e) => {
     setNewTask(e.target.value);
   };
+
+  const handleDelete = (taskId) => {
+    setTasks((oldTask) => {
+      return oldTask.filter((task) => task.id !== taskId);
+    });
+  };
   return (
     <>
       <form onSubmit={addToDo}>
@@ -45,7 +51,13 @@ function App() {
       <div>
         <ul>
           {tasks?.map((task) => (
-            <li key={Math.random()}>{task.text}</li>
+            <li key={task.id}>
+              {task.text}
+              <button
+                type="button"
+                onClick={() => handleDelete(task.id)}
+              ></button>
+            </li>
           ))}
         </ul>
       </div>
