@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import "./iconImports";
 import "./App.css";
 
 function App() {
@@ -53,10 +55,10 @@ function App() {
           {tasks?.map((task) => (
             <li key={task.id}>
               {task.text}
-              <button
-                type="button"
+              <FontAwesomeIcon
+                icon="xmark"
                 onClick={() => handleDelete(task.id)}
-              ></button>
+              />
             </li>
           ))}
         </ul>
