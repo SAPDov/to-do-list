@@ -11,6 +11,7 @@ form {
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 16px;
+
 }
 
 label {
@@ -32,13 +33,18 @@ button {
   padding: 8px 16px;
   border-radius: 4px;
   cursor: pointer;
+  
 }
+.btn-box {
+  display: flex;
+  justify-content: center;
 
+}
 button:hover {
   background-color: #0056b3;
 }
 
-div {
+.task-box {
   margin-top: 16px;
 }
 

@@ -48,9 +48,11 @@ function App() {
           value={newTask}
           onChange={handleInputChange}
         ></input>
-        <button type="submit"></button>
+        <div className="btn-box">
+          <button type="submit">ADD</button>
+        </div>
       </form>
-      <div>
+      <div className="task-box">
         <ul>
           {tasks?.map((task) => (
             <li key={task.id}>
