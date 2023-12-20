@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPenToSquare, faTimes } from "@fortawesome/free-solid-svg-icons";
+
 import "./iconImports";
 import "./App.css";
 
@@ -21,10 +23,23 @@ function App() {
 
   const [tasks, setTasks] = useState(defaultTodoList);
   const [newTask, setNewTask] = useState("");
+  const [isUpdate, setIsUpdate] = useState(null);
 
   const addToDo = (e) => {
     e.preventDefault();
-    setTasks([...tasks, { id: tasks.length + 1, text: newTask }]);
+    if (isUpdate !== null) {
+      // Update existing task
+      setTasks((oldTasks) =>
+        oldTasks.map((task) =>
+          task.id === isUpdate ? { ...task, text: newTask } : task
+        )
+      );
+      setIsUpdate(null);
+    } else {
+      // Add new task
+      setTasks([...tasks, { id: tasks.length + 1, text: newTask }]);
+    }
+
     setNewTask("");
   };
 
@@ -36,6 +51,16 @@ function App() {
     setTasks((oldTask) => {
       return oldTask.filter((task) => task.id !== taskId);
     });
+  };
+
+  const handleUpdate = (taskId) => {
+    setIsUpdate(taskId);
+    const taskToUpdate = tasks.find((task) => task.id === taskId);
+    setNewTask(taskToUpdate.text);
+  };
+
+  const handleUpdateSubmit = () => {
+    addToDo({ preventDefault: () => {} }); // Simulate form submission
   };
   return (
     <>
@@ -56,11 +81,32 @@ function App() {
         <ul>
           {tasks?.map((task) => (
             <li key={task.id}>
-              {task.text}
-              <FontAwesomeIcon
-                icon="xmark"
-                onClick={() => handleDelete(task.id)}
-              />
+              {isUpdate === task.id ? (
+                <>
+                  <input
+                    type="text"
+                    value={newTask}
+                    onChange={handleInputChange}
+                  />
+                  <div className="btn-box">
+                    <button onClick={handleUpdateSubmit}>Update</button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  {task.text}
+                  <div>
+                    <FontAwesomeIcon
+                      icon={faPenToSquare}
+                      onClick={() => handleUpdate(task.id)}
+                    />
+                    <FontAwesomeIcon
+                      icon={faTimes}
+                      onClick={() => handleDelete(task.id)}
+                    />
+                  </div>
+                </>
+              )}
             </li>
           ))}
         </ul>
